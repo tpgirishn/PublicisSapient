@@ -1,0 +1,112 @@
+CREATE TABLE users (
+    id VARCHAR(36) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    phone VARCHAR(20),
+    created_at TIMESTAMP NOT NULL
+);
+
+CREATE TABLE movies (
+    id VARCHAR(36) PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    description VARCHAR(200),
+    duration_minutes INT NOT NULL,
+    genre VARCHAR(50),
+    release_date DATE,
+    rating VARCHAR(10),
+    language VARCHAR(50)
+);
+
+CREATE TABLE theaters (
+    id VARCHAR(36) PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    address VARCHAR(255),
+    city VARCHAR(100),
+    state VARCHAR(100),
+    zip_code VARCHAR(20),
+    phone VARCHAR(20)
+);
+
+CREATE TABLE screens (
+    id VARCHAR(36) PRIMARY KEY,
+    theater_id VARCHAR(36) NOT NULL,
+    name VARCHAR(100),
+    total_seats INT NOT NULL,
+    CONSTRAINT fk_screen_theater FOREIGN KEY (theater_id) REFERENCES theaters(id)
+);
+
+CREATE TABLE seats (
+    id VARCHAR(36) PRIMARY KEY,
+    screen_id VARCHAR(36) NOT NULL,
+    seat_number VARCHAR(10) NOT NULL,
+    seat_type VARCHAR(50),
+    is_vip BOOLEAN DEFAULT FALSE,
+    CONSTRAINT fk_seat_screen FOREIGN KEY (screen_id) REFERENCES screens(id)
+);
+
+CREATE TABLE showtimes (
+    id VARCHAR(36) PRIMARY KEY,
+    movie_id VARCHAR(36) NOT NULL,
+    screen_id VARCHAR(36) NOT NULL,
+    start_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP NOT NULL,
+    language VARCHAR(50),
+    format VARCHAR(50),
+    CONSTRAINT fk_showtime_movie FOREIGN KEY (movie_id) REFERENCES movies(id),
+    CONSTRAINT fk_showtime_screen FOREIGN KEY (screen_id) REFERENCES screens(id)
+);
+
+CREATE TABLE promotions (
+    id VARCHAR(36) PRIMARY KEY,
+    code VARCHAR(50) UNIQUE NOT NULL,
+    description VARCHAR(255),
+    discount_percent INT NOT NULL,
+    valid_from DATE,
+    valid_to DATE,
+    max_uses INT
+);
+
+CREATE TABLE bookings (
+    id VARCHAR(36) PRIMARY KEY,
+    user_id VARCHAR(36) NOT NULL,
+    showtime_id VARCHAR(36) NOT NULL,
+    promotion_id VARCHAR(36),
+    booking_time TIMESTAMP NOT NULL,
+    total_amount DECIMAL(10,2) NOT NULL,
+    status VARCHAR(50),
+    CONSTRAINT fk_booking_user FOREIGN KEY (user_id) REFERENCES users(id),
+    CONSTRAINT fk_booking_showtime FOREIGN KEY (showtime_id) REFERENCES showtimes(id),
+    CONSTRAINT fk_booking_promotion FOREIGN KEY (promotion_id) REFERENCES promotions(id)
+);
+
+CREATE TABLE payments (
+    id VARCHAR(36) PRIMARY KEY,
+    booking_id VARCHAR(36) NOT NULL,
+    payment_time TIMESTAMP NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    payment_method VARCHAR(50),
+    status VARCHAR(50),
+    transaction_id VARCHAR(100),
+    CONSTRAINT fk_payment_booking FOREIGN KEY (booking_id) REFERENCES bookings(id)
+);
+
+CREATE TABLE reviews (
+    id VARCHAR(36) PRIMARY KEY,
+    user_id VARCHAR(36) NOT NULL,
+    movie_id VARCHAR(36) NOT NULL,
+    rating INT CHECK (rating BETWEEN 1 AND 5),
+    comment VARCHAR(200),
+    review_time TIMESTAMP,
+    CONSTRAINT fk_review_user FOREIGN KEY (user_id) REFERENCES users(id),
+    CONSTRAINT fk_review_movie FOREIGN KEY (movie_id) REFERENCES movies(id)
+);
+
+CREATE TABLE booking_seats (
+    id VARCHAR(36) PRIMARY KEY,
+    booking_id VARCHAR(36) NOT NULL,
+    seat_id VARCHAR(36) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    CONSTRAINT fk_booking_seat_booking FOREIGN KEY (booking_id) REFERENCES bookings(id),
+    CONSTRAINT fk_booking_seat_seat FOREIGN KEY (seat_id) REFERENCES seats(id)
+);

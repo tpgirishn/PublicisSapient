@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'org.flywaydb.flyway' version '11.19.0'
     id 'org.springframework.boot' version '4.0.0'
     id 'io.spring.dependency-management' version '1.1.7'
 }
@@ -14,10 +15,20 @@ repositories {
 dependencies {
     implementation ('org.springframework.boot:spring-boot-starter-web')
     implementation ('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation ('com.h2database:h2')
     implementation ('org.springframework.boot:org.springframework.boot.gradle.plugin:4.0.0')
-    implementation ('org.projectlombok:lombok')
+    compileOnly ('org.projectlombok:lombok')
+    annotationProcessor ('org.projectlombok:lombok')
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+flyway {
+    url = 'jdbc:h2:file:~/moviebookingdb;DB_CLOSE_ON_EXIT=TRUE' // H2 file-based URL; use 'jdbc:h2:mem:mydb' for in-memory
+    user = 'sa'
+    password = '' // H2 default user 'sa' has no password by default
+    schemas = ['PUBLIC'] // Default schema for H2
+    // Optional: point to specific locations for migration scripts
+    // locations = ['filesystem:src/main/resources/db/migration']
 }
 
 test {
