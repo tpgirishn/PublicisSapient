@@ -1,13 +1,20 @@
 
-package com.example.moviebooking.entity;
+package org.example.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.example.visitors.DiscountVisitor;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "bookings")
+@Getter
+@Setter
 public class Booking {
 
     @Id
@@ -29,9 +36,12 @@ public class Booking {
     @JoinColumn(name = "promotion_id")
     private Promotion promotion;
 
-    @OneToMany(mappedBy = "booking")
-    private List<Payment> payments;
+    @OneToOne(mappedBy = "booking")
+    private Payment payment;
 
     @OneToMany(mappedBy = "booking")
     private List<BookingSeat> bookingSeats;
+
+    @Transient
+    Set<DiscountVisitor> discountsApplied;
 }

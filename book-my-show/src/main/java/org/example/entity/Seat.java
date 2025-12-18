@@ -1,10 +1,14 @@
 
-package com.example.moviebooking.entity;
+package org.example.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "seats")
+@Getter
+@Setter
 public class Seat {
 
     @Id

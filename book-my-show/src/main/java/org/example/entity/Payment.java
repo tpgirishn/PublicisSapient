@@ -1,12 +1,17 @@
 
-package com.example.moviebooking.entity;
+package org.example.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
 @Table(name = "payments")
+@Getter
+@Setter
 public class Payment {
 
     @Id
@@ -18,7 +23,7 @@ public class Payment {
     private String status;
     private String transactionId;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "booking_id")
     private Booking booking;
 }
