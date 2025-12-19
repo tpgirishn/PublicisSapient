@@ -40,6 +40,7 @@ public class BookingService {
         for (DiscountVisitor visitor: visitors){
             visitor.apply(booking);
         }
+        booking.getBookingSeats().parallelStream().forEach(bookingSeat -> bookingSeat.getSeat().setStatus("BOOKED"));
         return bookingRepository.saveAndFlush(booking);
     }
 
