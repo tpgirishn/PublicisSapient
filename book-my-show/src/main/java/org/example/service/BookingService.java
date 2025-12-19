@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +27,7 @@ public class BookingService {
         this.visitors = visitors;
     }
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
-    public Booking book(Booking booking) throws CloneNotSupportedException {
+    public Booking book(Booking booking) throws CloneNotSupportedException, ExecutionException, InterruptedException {
         Set<String> seatsLockedOrAlreadyBooked = booking.getBookingSeats()
                 .parallelStream()
                 .map(mapper -> mapper.getSeat().getId()).collect(Collectors.toSet());
@@ -60,12 +61,11 @@ public class BookingService {
             }
             return "Payment Successful";
         });
-        if(paymentFuture.isDone()) {
+        if(paymentFuture.get().equalsIgnoreCase("Payment Successful")) {
             booking.getBookingSeats().parallelStream().forEach(bookingSeat -> bookingSeat.getSeat().setStatus("BOOKED"));
             return bookingRepository.saveAndFlush(booking);
-        } else{
-            throw new RuntimeException("Payment was unsuccessful. Please try again.");
-        }
+        } else
+            throw new RuntimeException("Payment Unsuccessful..")
     }
 
     public Booking getBooking(String id) {
