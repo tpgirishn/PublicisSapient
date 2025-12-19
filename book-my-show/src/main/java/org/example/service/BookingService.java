@@ -65,7 +65,7 @@ public class BookingService {
             booking.getBookingSeats().parallelStream().forEach(bookingSeat -> bookingSeat.getSeat().setStatus("BOOKED"));
             return bookingRepository.saveAndFlush(booking);
         } else
-            throw new RuntimeException("Payment Unsuccessful..")
+            throw new RuntimeException("Payment Unsuccessful..");
     }
 
     public Booking getBooking(String id) {
