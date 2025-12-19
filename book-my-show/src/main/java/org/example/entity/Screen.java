@@ -1,6 +1,7 @@
 
 package org.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,10 +23,10 @@ public class Screen {
     @ManyToOne
     @JoinColumn(name = "theater_id")
     private Theater theater;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "screen")
     private List<Seat> seats;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "screen")
     private List<Showtime> showtimes;
 }

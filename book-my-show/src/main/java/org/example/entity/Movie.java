@@ -1,6 +1,7 @@
 
 package org.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -27,10 +28,10 @@ public class Movie {
     private LocalDate releaseDate;
     private String rating;
     private String language;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "movie")
     private List<Review> reviews;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "movie")
     private List<Showtime> showtimes;
 }

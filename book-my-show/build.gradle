@@ -23,7 +23,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 flyway {
-    url = 'jdbc:h2:file:~/moviebookingdb;DB_CLOSE_ON_EXIT=TRUE' // H2 file-based URL; use 'jdbc:h2:mem:mydb' for in-memory
+    url = 'jdbc:h2:file:~/moviebookingdb' // H2 file-based URL; use 'jdbc:h2:mem:mydb' for in-memory
     user = 'sa'
     password = '' // H2 default user 'sa' has no password by default
     schemas = ['PUBLIC'] // Default schema for H2

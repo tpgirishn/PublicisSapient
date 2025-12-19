@@ -1,6 +1,7 @@
 
 package org.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,7 @@ public class BookingSeat {
     private String id;
 
     private BigDecimal price;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "booking_id")
     private Booking booking;

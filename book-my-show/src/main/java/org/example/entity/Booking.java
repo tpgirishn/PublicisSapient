@@ -8,6 +8,7 @@ import org.example.visitors.DiscountVisitor;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -18,6 +19,7 @@ import java.util.Set;
 public class Booking {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
     private Instant bookingTime;
@@ -43,5 +45,5 @@ public class Booking {
     private List<BookingSeat> bookingSeats;
 
     @Transient
-    Set<DiscountVisitor> discountsApplied;
+    Set<DiscountVisitor> discountsApplied = new HashSet<>();
 }

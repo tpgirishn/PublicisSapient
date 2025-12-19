@@ -1,6 +1,7 @@
 
 package org.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -26,7 +27,7 @@ public class Promotion {
     private LocalDate validFrom;
     private LocalDate validTo;
     private int maxUses;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "promotion")
     private List<Booking> bookings;
 }

@@ -1,6 +1,7 @@
 
 package org.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -25,7 +26,7 @@ public class Theater {
     private String state;
     private String zipCode;
     private String phone;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "theater")
     private List<Screen> screens;
 }

@@ -1,6 +1,7 @@
 
 package org.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +31,7 @@ public class Showtime {
     @JoinColumn(name = "screen_id")
     private Screen screen;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "showtime")
     private List<Booking> bookings;
 }

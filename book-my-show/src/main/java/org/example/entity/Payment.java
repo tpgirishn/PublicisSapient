@@ -1,6 +1,7 @@
 
 package org.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +23,7 @@ public class Payment {
     private String paymentMethod;
     private String status;
     private String transactionId;
-
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "booking_id")
     private Booking booking;

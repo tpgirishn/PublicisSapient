@@ -1,6 +1,7 @@
 
 package org.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -25,10 +26,10 @@ public class User {
     private String passwordHash;
     private String phone;
     private Instant createdAt;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Review> reviews;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Booking> bookings;
 }

@@ -1,11 +1,12 @@
 package org.example.visitors;
 
 import org.example.entity.Booking;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
-
+@Component
 public class TimeDiscountVisitor extends DiscountVisitor{
     public TimeDiscountVisitor() {
         this.description = "Get 10% disount on total amount if showtimes are between 1:00 pm to 5:00 pm";
