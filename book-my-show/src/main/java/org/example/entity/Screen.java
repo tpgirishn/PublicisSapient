@@ -23,7 +23,6 @@ public class Screen {
     @ManyToOne
     @JoinColumn(name = "theater_id")
     private Theater theater;
-    @JsonIgnore
     @OneToMany(mappedBy = "screen")
     private List<Seat> seats;
     @JsonIgnore

@@ -7,11 +7,11 @@ import java.math.BigDecimal;
 @Component
 public class CountDiscountVisitor extends DiscountVisitor{
     public CountDiscountVisitor() {
-        this.description = "Pay the cost of only two tickets if you purchase three";
+        this.description = "50% discount on third ticket if you purchase three tickets";
     }
 
     @Override
-    public void apply(Booking booking) {
+    public void apply(Booking booking) throws CloneNotSupportedException {
         int numberOfFreeSeats = 0;
         for (int i = 3; i <= booking.getBookingSeats().size(); i=i+3){
             numberOfFreeSeats++;
@@ -22,7 +22,8 @@ public class CountDiscountVisitor extends DiscountVisitor{
                             .divide(new BigDecimal(booking.getBookingSeats().size()))
                             .multiply(new BigDecimal(numberOfFreeSeats)).divide(new BigDecimal(2))));
             this.discountApplied = true;
-            booking.getDiscountsApplied().add(this);
+            booking.getDiscountsApplied().add(this.clone());
         }
+        this.discountApplied = false;
     }
 }

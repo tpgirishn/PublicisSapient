@@ -1,7 +1,6 @@
 package org.example.controller;
 
 import org.example.entity.Showtime;
-import org.example.entity.Theater;
 import org.example.service.ShowtimeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,22 @@ public class ShowtimeController {
     }
 
     @GetMapping("/showtimes")
-    public ResponseEntity<List<Showtime>> getBooking(@RequestParam("movieId") String movieId, @RequestParam("movieDate") LocalDate movieDate) {
+    public ResponseEntity<List<Showtime>> getShowTimes(@RequestParam("movieId") String movieId, @RequestParam("movieDate") LocalDate movieDate) {
         return ResponseEntity.ok(showtimeService.getTheatres(movieId,movieDate));
+    }
+
+    @PostMapping("/showtimes")
+    public ResponseEntity<Showtime> createShowTimes(@RequestBody Showtime showtime) {
+        return ResponseEntity.ok(showtimeService.createShowTime(showtime));
+    }
+
+    @PutMapping("/showtimes")
+    public ResponseEntity<Showtime> updateShowTime(@RequestBody Showtime showtime) {
+        return ResponseEntity.ok(showtimeService.updateShowTime(showtime));
+    }
+
+    @DeleteMapping("/showtimes")
+    public ResponseEntity<String> deleteShowTime(@RequestParam("showId") String showId) {
+        return ResponseEntity.ok().body("Deleted successfully");
     }
 }

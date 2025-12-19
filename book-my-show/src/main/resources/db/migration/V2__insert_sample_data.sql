@@ -18,9 +18,9 @@ INSERT INTO screens VALUES
 
 
 INSERT INTO seats VALUES
-('seat1', 's1', 'A1', 'REGULAR', FALSE),
-('seat2', 's1', 'A2', 'REGULAR', FALSE),
-('seat3', 's1', 'B1', 'VIP', TRUE);
+('seat1', 's1', 'A1', 'REGULAR', FALSE, 'AVAILABLE'),
+('seat2', 's1', 'A2', 'REGULAR', FALSE, 'AVAILABLE'),
+('seat3', 's1', 'B1', 'VIP', TRUE, 'AVAILABLE');
 
 
 INSERT INTO showtimes VALUES

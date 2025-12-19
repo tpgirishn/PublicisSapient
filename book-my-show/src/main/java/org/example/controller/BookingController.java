@@ -18,7 +18,7 @@ public class BookingController {
     }
 
     @PostMapping("/ticket")
-    public ResponseEntity<Booking> bookTicket(@RequestBody Booking booking){
+    public ResponseEntity<Booking> bookTicket(@RequestBody Booking booking) throws CloneNotSupportedException {
         return ResponseEntity.ok(bookingService.book(booking));
     }
 

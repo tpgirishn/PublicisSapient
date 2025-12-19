@@ -42,6 +42,7 @@ CREATE TABLE seats (
     seat_number VARCHAR(10) NOT NULL,
     seat_type VARCHAR(50),
     is_vip BOOLEAN DEFAULT FALSE,
+    status VARCHAR(10) NOT NULL,
     CONSTRAINT fk_seat_screen FOREIGN KEY (screen_id) REFERENCES screens(id)
 );
 
