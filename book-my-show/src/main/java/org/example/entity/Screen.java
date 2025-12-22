@@ -23,9 +23,9 @@ public class Screen {
     @ManyToOne
     @JoinColumn(name = "theater_id")
     private Theater theater;
-    @OneToMany(mappedBy = "screen")
+    @OneToMany(mappedBy = "screen", cascade = CascadeType.ALL)
     private List<Seat> seats;
     @JsonIgnore
-    @OneToMany(mappedBy = "screen")
+    @OneToMany(mappedBy = "screen", cascade = CascadeType.ALL)
     private List<Showtime> showtimes;
 }

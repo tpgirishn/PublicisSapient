@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -21,17 +22,23 @@ public class BookingService {
     Set<DiscountVisitor> visitors;
     BookingRepository bookingRepository;
     SeatRepository seatRepository;
-    public BookingService(BookingRepository bookingRepository, SeatRepository seatRepository, Set<DiscountVisitor> visitors){
+    CacheService cacheService;
+    public BookingService(BookingRepository bookingRepository, SeatRepository seatRepository, CacheService cacheService, Set<DiscountVisitor> visitors){
         this.bookingRepository = bookingRepository;
         this.seatRepository = seatRepository;
+        this.cacheService = cacheService;
         this.visitors = visitors;
     }
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public Booking book(Booking booking) throws CloneNotSupportedException, ExecutionException, InterruptedException {
+        booking.setTotalAmount(booking.getBookingSeats().parallelStream()
+                .map(mapper -> mapper.getPrice())
+                .collect(Collectors
+                        .reducing(new BigDecimal(0), BigDecimal::add)));
         Set<String> seatsLockedOrAlreadyBooked = booking.getBookingSeats()
                 .parallelStream()
                 .map(mapper -> mapper.getSeat().getId()).collect(Collectors.toSet());
-        Set<String> seatsForCurrentBooking = seatRepository.findAllById(seatsLockedOrAlreadyBooked)
+        Set<String> seatsForCurrentBooking = seatRepository.customFindAllById(seatsLockedOrAlreadyBooked)
                 .parallelStream()
                 .map(mapper -> mapper.getStatus()).collect(Collectors.toSet());
 
@@ -49,10 +56,12 @@ public class BookingService {
                 .map(mapper->mapper.getSeat())
                 .map(mapper1->{
                     mapper1.setStatus("LOCKED");
+                    mapper1.setScreen(booking.getShowtime().getScreen());
+                    cacheService.performSingleCacheEvict(mapper1);
                     return mapper1;
                 })
                 .collect(Collectors.toList());
-        seatRepository.saveAllAndFlush(seatsToBeBooked);
+        seatRepository.saveAll(seatsToBeBooked);
         CompletableFuture<String> paymentFuture = CompletableFuture.supplyAsync(()->{
             try {
                 Thread.sleep(500);
@@ -62,10 +71,32 @@ public class BookingService {
             return "Payment Successful";
         });
         if(paymentFuture.get().equalsIgnoreCase("Payment Successful")) {
-            booking.getBookingSeats().parallelStream().forEach(bookingSeat -> bookingSeat.getSeat().setStatus("BOOKED"));
+            booking.setStatus("CONFIRMED");
+            seatRepository.saveAll(booking.getBookingSeats()
+                    .parallelStream()
+                    .map(mapper->mapper.getSeat())
+                    .map(mapper1->{
+                        mapper1.setStatus("BOOKED");
+                        mapper1.setScreen(booking.getShowtime().getScreen());
+                        cacheService.performSingleCacheEvict(mapper1);
+                        return mapper1;
+                    })
+                    .collect(Collectors.toList()));
+
             return bookingRepository.saveAndFlush(booking);
-        } else
+        } else {
+            List<Seat> lockedSeats = booking.getBookingSeats()
+                    .parallelStream()
+                    .map(mapper->mapper.getSeat())
+                    .map(mapper1->{
+                        mapper1.setStatus("AVAILABLE");
+                        cacheService.performSingleCachePut(mapper1);
+                        return mapper1;
+                    })
+                    .collect(Collectors.toList());
+            seatRepository.saveAll(lockedSeats);
             throw new RuntimeException("Payment Unsuccessful..");
+        }
     }
 
     public Booking getBooking(String id) {

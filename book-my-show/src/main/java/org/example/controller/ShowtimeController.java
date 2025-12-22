@@ -21,8 +21,8 @@ public class ShowtimeController {
     }
 
     @PostMapping("/showtimes")
-    public ResponseEntity<Showtime> createShowTimes(@RequestBody Showtime showtime) {
-        return ResponseEntity.ok(showtimeService.createShowTime(showtime));
+    public ResponseEntity<List<Showtime>> createShowTimes(@RequestBody List<Showtime> showtimes) {
+        return ResponseEntity.ok(showtimeService.createShowTime(showtimes));
     }
 
     @PutMapping("/showtimes")
@@ -31,7 +31,8 @@ public class ShowtimeController {
     }
 
     @DeleteMapping("/showtimes")
-    public ResponseEntity<String> deleteShowTime(@RequestParam("showId") String showId) {
+    public ResponseEntity<String> deleteShowTime(@RequestBody List<Showtime> showtimes) {
+        showtimeService.deleteShowTime(showtimes);
         return ResponseEntity.ok().body("Deleted successfully");
     }
 }

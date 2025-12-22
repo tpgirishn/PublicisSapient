@@ -5,6 +5,8 @@ import org.example.service.BookingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.ExecutionException;
+
 @RestController
 public class BookingController {
     BookingService bookingService;
@@ -18,7 +20,7 @@ public class BookingController {
     }
 
     @PostMapping("/ticket")
-    public ResponseEntity<Booking> bookTicket(@RequestBody Booking booking) throws CloneNotSupportedException {
+    public ResponseEntity<Booking> bookTicket(@RequestBody Booking booking) throws CloneNotSupportedException, ExecutionException, InterruptedException {
         return ResponseEntity.ok(bookingService.book(booking));
     }
 

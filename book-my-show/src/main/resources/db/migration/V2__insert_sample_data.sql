@@ -10,7 +10,8 @@ INSERT INTO movies VALUES
 
 INSERT INTO theaters VALUES
 ('t1', 'PVR Cinemas', 'MG Road', 'Bangalore', 'Karnataka', '560001', '0801234567');
-
+('t2', 'PVR Cinemas', 'SCB Road', 'Mumbai', 'Maharashtra', '400001', '0801223467');
+('t3', 'PVR Cinemas', 'MG Road', 'Connaught Place', 'Delhi', '960001', '0807634567');
 
 INSERT INTO screens VALUES
 ('s1', 't1', 'Screen 1', 100),

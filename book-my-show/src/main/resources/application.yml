@@ -26,3 +26,12 @@ spring:
     baseline-on-migrate: true
     validate-on-migrate: true
     clean-disabled: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - info
+          - health
+          - caches
+          - metrics

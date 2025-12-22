@@ -19,8 +19,10 @@ public class Seat {
     private String seatType;
     private boolean isVip;
     private String status;
+    @Column(name = "screen_id")
+    private String screenId;
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "screen_id")
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "screen_id", insertable = false, updatable = false)
     private Screen screen;
 }

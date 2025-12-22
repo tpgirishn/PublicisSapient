@@ -22,13 +22,11 @@ public class Showtime {
     private Instant endTime;
     private String language;
     private String format;
-
     @ManyToOne
-    @JoinColumn(name = "movie_id")
+    @JoinColumn(name = "movie_id", referencedColumnName = "id")
     private Movie movie;
-
-    @ManyToOne
-    @JoinColumn(name = "screen_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "screen_id", referencedColumnName = "id")
     private Screen screen;
 
     @JsonIgnore
