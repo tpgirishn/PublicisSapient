@@ -22,8 +22,8 @@ public class Booking {
     @Transient
     final Set<DiscountVisitor> discountsApplied = new HashSet<>();
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private Instant bookingTime;
     private BigDecimal totalAmount;
     private String status;

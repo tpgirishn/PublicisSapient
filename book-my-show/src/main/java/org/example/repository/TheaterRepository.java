@@ -1,9 +1,9 @@
 package org.example.repository;
 
-import org.example.entity.Booking;
+import org.example.entity.Theater;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BookingRepository extends JpaRepository<Booking, Long> {
+public interface TheaterRepository extends JpaRepository<Theater, Long> {
 }

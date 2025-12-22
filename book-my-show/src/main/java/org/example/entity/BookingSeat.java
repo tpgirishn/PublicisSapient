@@ -16,7 +16,8 @@ import java.math.BigDecimal;
 public class BookingSeat {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private BigDecimal price;
     @JsonIgnore

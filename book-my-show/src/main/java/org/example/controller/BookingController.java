@@ -17,7 +17,7 @@ public class BookingController {
     }
 
     @GetMapping("/ticket")
-    public ResponseEntity<Booking> getBooking(@RequestParam("id") String id) {
+    public ResponseEntity<Booking> getBooking(@RequestParam("id") Long id) {
         return ResponseEntity.ok(bookingService.getBooking(id));
     }
 

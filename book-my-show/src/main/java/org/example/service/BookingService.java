@@ -43,7 +43,7 @@ public class BookingService {
                 .map(Seat::getPrice)
                 .collect(Collectors
                         .reducing(new BigDecimal(0), BigDecimal::add)));
-        Set<String> seatsLockedOrAlreadyBooked = booking.getBookingSeats()
+        Set<Long> seatsLockedOrAlreadyBooked = booking.getBookingSeats()
                 .parallelStream()
                 .map(mapper -> mapper.getSeat().getId()).collect(Collectors.toSet());
         Set<String> seatsForCurrentBooking = seatRepository.customFindAllById(seatsLockedOrAlreadyBooked)
@@ -107,7 +107,7 @@ public class BookingService {
         }
     }
 
-    public Booking getBooking(String id) {
+    public Booking getBooking(Long id) {
         return bookingRepository.findById(id).get();
     }
 }

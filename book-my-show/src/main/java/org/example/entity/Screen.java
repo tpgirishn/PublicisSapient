@@ -14,15 +14,16 @@ import java.util.List;
 public class Screen {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String name;
     private int totalSeats;
-
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "theater_id")
+    @JoinColumn(name = "theater_id", referencedColumnName = "id")
     private Theater theater;
-    @OneToMany(mappedBy = "screen", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "screen", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seat> seats;
     @JsonIgnore
     @OneToMany(mappedBy = "screen", cascade = CascadeType.ALL)

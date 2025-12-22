@@ -10,13 +10,13 @@ import java.util.List;
 import java.util.Set;
 
 @Repository
-public interface SeatRepository extends JpaRepository<Seat, String> {
+public interface SeatRepository extends JpaRepository<Seat, Long> {
     default <S extends Seat> List<S> saveAll(Iterable<S> entities) {
         return (List<S>) this.saveAllAndFlush(entities);
     }
 
     @Cacheable(value = "seats", key = "#seatsLockedOrAlreadyBooked")
-    default <S extends Seat> List<S> customFindAllById(Set<String> seatsLockedOrAlreadyBooked) {
+    default <S extends Seat> List<S> customFindAllById(Set<Long> seatsLockedOrAlreadyBooked) {
         return (List<S>) this.findAllById(seatsLockedOrAlreadyBooked);
     }
 

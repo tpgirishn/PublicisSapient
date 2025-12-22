@@ -14,17 +14,18 @@ import java.math.BigDecimal;
 public class Seat {
 
     @Id
-    private String id;
+    @Column(updatable = false, insertable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String seatNumber;
     private String seatType;
     private boolean isVip;
     private String status;
     private BigDecimal price;
-    @Column(name = "screen_id")
-    private String screenId;
+
     @JsonIgnore
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "screen_id", insertable = false, updatable = false)
+    @ManyToOne
+    @JoinColumn(name = "screen_id", referencedColumnName = "id")
     private Screen screen;
 }

@@ -9,7 +9,7 @@ import java.time.Instant;
 import java.util.List;
 
 @Repository
-public interface ShowtimeRepository extends JpaRepository<Showtime, String> {
+public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
     @Query("Select s from Showtime s  where s.movie.id = :movieId " +
             " AND s.startTime BETWEEN :movieStartInstant and :movieEndInstant" +
             " AND s.screen.theater.city = :town")

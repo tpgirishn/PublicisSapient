@@ -15,7 +15,8 @@ import java.util.List;
 public class Showtime {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private Instant startTime;
     private Instant endTime;

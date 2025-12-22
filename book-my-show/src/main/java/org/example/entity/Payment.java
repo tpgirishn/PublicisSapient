@@ -15,7 +15,8 @@ import java.time.Instant;
 public class Payment {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private Instant paymentTime;
     private BigDecimal amount;
