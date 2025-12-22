@@ -1,9 +1,9 @@
-
 package org.example.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @Table(name = "booking_seats")
 @Getter
 @Setter
+@NoArgsConstructor
 public class BookingSeat {
 
     @Id

@@ -16,17 +16,18 @@ public interface SeatRepository extends JpaRepository<Seat, String> {
     }
 
     @Cacheable(value = "seats", key = "#seatsLockedOrAlreadyBooked")
-    default <S extends Seat> List<S> customFindAllById(Set<String> seatsLockedOrAlreadyBooked){
+    default <S extends Seat> List<S> customFindAllById(Set<String> seatsLockedOrAlreadyBooked) {
         return (List<S>) this.findAllById(seatsLockedOrAlreadyBooked);
     }
 
     default void performCacheEvictforAll(List<Seat> savedSeats) {
-        for(Seat seat : savedSeats){
+        for (Seat seat : savedSeats) {
             performSingleCacheEvict(seat);
         }
     }
+
     @CacheEvict(value = "seats", key = "#seat.id")
-    default void performSingleCacheEvict(Seat seat){
+    default void performSingleCacheEvict(Seat seat) {
 
     }
 }

@@ -11,13 +11,14 @@ import java.util.List;
 @RestController
 public class ShowtimeController {
     ShowtimeService showtimeService;
-    public ShowtimeController(ShowtimeService showtimeService){
+
+    public ShowtimeController(ShowtimeService showtimeService) {
         this.showtimeService = showtimeService;
     }
 
     @GetMapping("/showtimes")
-    public ResponseEntity<List<Showtime>> getShowTimes(@RequestParam("movieId") String movieId, @RequestParam("movieDate") LocalDate movieDate) {
-        return ResponseEntity.ok(showtimeService.getTheatres(movieId,movieDate));
+    public ResponseEntity<List<Showtime>> getShowTimes(@RequestParam("movieId") String movieId, @RequestParam("movieDate") LocalDate movieDate, @RequestParam("town") String town) {
+        return ResponseEntity.ok(showtimeService.getTheatres(movieId, movieDate, town));
     }
 
     @PostMapping("/showtimes")

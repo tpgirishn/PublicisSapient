@@ -1,10 +1,11 @@
-
 package org.example.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "seats")
@@ -19,6 +20,7 @@ public class Seat {
     private String seatType;
     private boolean isVip;
     private String status;
+    private BigDecimal price;
     @Column(name = "screen_id")
     private String screenId;
     @JsonIgnore

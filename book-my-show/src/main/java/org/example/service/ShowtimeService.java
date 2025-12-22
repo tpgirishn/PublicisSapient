@@ -16,49 +16,52 @@ import java.util.stream.Collectors;
 public class ShowtimeService {
     ShowtimeRepository showtimeRepository;
     CacheService cacheService;
-    public ShowtimeService(ShowtimeRepository showtimeRepository, CacheService cacheService){
+
+    public ShowtimeService(ShowtimeRepository showtimeRepository, CacheService cacheService) {
         this.showtimeRepository = showtimeRepository;
         this.cacheService = cacheService;
     }
-    public List<Showtime> getTheatres(String movieId, LocalDate movieDate) {
+
+    public List<Showtime> getTheatres(String movieId, LocalDate movieDate, String town) {
         Instant movieStartInstant = movieDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
         Instant movieEndInstant = movieDate.atStartOfDay(ZoneId.systemDefault()).toInstant().plus(24, ChronoUnit.HOURS);
-        return showtimeRepository.findAllByMovieAndDate(movieId, movieStartInstant, movieEndInstant);
+        return showtimeRepository.findAllByMovieAndDateAndTown(movieId, movieStartInstant, movieEndInstant, town);
     }
 
     public List<Showtime> createShowTime(List<Showtime> showtimes) {
-        List<Showtime> savedShowtimes =  showtimeRepository.saveAll(showtimes);
+        List<Showtime> savedShowtimes = showtimeRepository.saveAll(showtimes);
         performCachePutforAll(savedShowtimes.parallelStream()
                 .map(mapper -> mapper.getScreen().getSeats())
                 .flatMap(mapper1 -> mapper1.stream().distinct())
                 .collect(Collectors.toList()));
         return savedShowtimes;
     }
+
     public void performCachePutforAll(List<Seat> savedSeats) {
-        for(Seat seat : savedSeats){
+        for (Seat seat : savedSeats) {
             cacheService.performSingleCachePut(seat);
         }
     }
 
     public void performCacheEvictforAll(List<Seat> savedSeats) {
-        for(Seat seat : savedSeats){
+        for (Seat seat : savedSeats) {
             cacheService.performSingleCacheEvict(seat);
         }
     }
 
     public Showtime updateShowTime(Showtime showtime) {
-         if(showtimeRepository.existsById(showtime.getId())){
-             showtime.getScreen().getSeats().parallelStream().map(cacheService::performSingleCachePut).findAny();
-             return showtimeRepository.saveAndFlush(showtime);
-         }else
-             throw new RuntimeException("Show cannot be updated since it does not exist!");
+        if (showtimeRepository.existsById(showtime.getId())) {
+            showtime.getScreen().getSeats().parallelStream().map(cacheService::performSingleCachePut).findAny();
+            return showtimeRepository.saveAndFlush(showtime);
+        } else
+            throw new RuntimeException("Show cannot be updated since it does not exist!");
     }
 
     public void deleteShowTime(List<Showtime> showtimes) {
-            showtimeRepository.deleteAll(showtimes);
-            performCacheEvictforAll(showtimes.parallelStream()
-                    .map(mapper -> mapper.getScreen().getSeats())
-                    .flatMap(mapper1 -> mapper1.stream().distinct())
-                    .collect(Collectors.toList()));
+        showtimeRepository.deleteAll(showtimes);
+        performCacheEvictforAll(showtimes.parallelStream()
+                .map(mapper -> mapper.getScreen().getSeats())
+                .flatMap(mapper1 -> mapper1.stream().distinct())
+                .collect(Collectors.toList()));
     }
 }

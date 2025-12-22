@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 
 public class CacheService {
     @CachePut(value = "seats", key = "#seat.id", condition = "#seat.status == 'AVAILABLE'")
-    public Seat performSingleCachePut(Seat seat){
+    public Seat performSingleCachePut(Seat seat) {
         return seat;
     }
 
     @CacheEvict(value = "seats", key = "#seat.id")
-    public Seat performSingleCacheEvict(Seat seat){
+    public Seat performSingleCacheEvict(Seat seat) {
         return seat;
     }
 }

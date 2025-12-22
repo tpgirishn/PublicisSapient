@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class UtilController {
     @Autowired
     CacheManager cacheManager;
+
     @GetMapping("/cache")
-    public ResponseEntity getCacheContents(){
+    public ResponseEntity getCacheContents() {
         return ResponseEntity.ok(cacheManager.getCache("seats").getNativeCache());
     }
 }

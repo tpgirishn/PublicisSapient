@@ -11,8 +11,9 @@ import java.util.List;
 @Repository
 public interface ShowtimeRepository extends JpaRepository<Showtime, String> {
     @Query("Select s from Showtime s  where s.movie.id = :movieId " +
-            " AND s.startTime BETWEEN :movieStartInstant and :movieEndInstant")
-    public List<Showtime> findAllByMovieAndDate(String movieId, Instant movieStartInstant, Instant movieEndInstant);
+            " AND s.startTime BETWEEN :movieStartInstant and :movieEndInstant" +
+            " AND s.screen.theater.city = :town")
+    public List<Showtime> findAllByMovieAndDateAndTown(String movieId, Instant movieStartInstant, Instant movieEndInstant, String town);
 
     default public <S extends Showtime> List<S> saveAll(Iterable<S> entities) {
         List<Showtime> savedShowtimes = (List<Showtime>) this.saveAllAndFlush(entities);

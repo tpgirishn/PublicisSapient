@@ -1,4 +1,3 @@
-
 package org.example.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
