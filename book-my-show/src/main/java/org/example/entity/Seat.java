@@ -14,7 +14,6 @@ import java.math.BigDecimal;
 public class Seat {
 
     @Id
-    @Column(updatable = false, insertable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

@@ -30,10 +30,6 @@ public class ShowtimeService {
 
     public List<Showtime> createShowTime(List<Showtime> showtimes) {
         List<Showtime> savedShowtimes = showtimeRepository.saveAll(showtimes);
-        performCachePutforAll(savedShowtimes.parallelStream()
-                .map(mapper -> mapper.getScreen().getSeats())
-                .flatMap(mapper1 -> mapper1.stream().distinct())
-                .collect(Collectors.toList()));
         return savedShowtimes;
     }
 
@@ -51,7 +47,10 @@ public class ShowtimeService {
 
     public Showtime updateShowTime(Showtime showtime) {
         if (showtimeRepository.existsById(showtime.getId())) {
-            showtime.getScreen().getSeats().parallelStream().map(cacheService::performSingleCachePut).findAny();
+            if (showtime.getScreen().getSeats() != null) {
+                showtime.getScreen().getSeats().parallelStream()
+                        .map(cacheService::performSingleCachePut).findAny();
+            }
             return showtimeRepository.saveAndFlush(showtime);
         } else
             throw new RuntimeException("Show cannot be updated since it does not exist!");

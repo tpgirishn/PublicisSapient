@@ -18,6 +18,5 @@ public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
     default public <S extends Showtime> List<S> saveAll(Iterable<S> entities) {
         List<Showtime> savedShowtimes = (List<Showtime>) this.saveAllAndFlush(entities);
         return (List<S>) savedShowtimes;
-
     }
 }
