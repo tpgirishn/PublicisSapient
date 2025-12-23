@@ -50,8 +50,7 @@ public class BookingService {
                 .parallelStream()
                 .map(mapper -> mapper.getStatus()).collect(Collectors.toSet());
 
-        if (seatsForCurrentBooking.contains("BOOKED")
-                || seatsForCurrentBooking.contains("LOCKED")) {
+        if (seatsForCurrentBooking.size() == 0) {
             throw new RuntimeException("The current combination of seats are not available. " +
                     "Please select different seat combination.");
         }
