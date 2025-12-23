@@ -28,13 +28,17 @@ public class CountDiscountVisitor extends DiscountVisitor {
                 return o1.getPrice().subtract(o2.getPrice()).intValueExact();
             }
         }).collect(Collectors.toCollection(LinkedHashSet::new));
-        sortedSeats.stream().limit(numberOfFreeSeats).forEach(mapper -> mapper.setPrice(mapper.getPrice().divide(new BigDecimal(2))));
-
+        BigDecimal amountToBeSubtracted = sortedSeats.stream().limit(numberOfFreeSeats).map((bookingSeat) -> {
+            return bookingSeat.getSeat().getPrice();
+        }).reduce((bigDecimal, bigDecimal2) -> {
+            return bigDecimal.add(bigDecimal2);
+        }).get();
+        Double amountToBeAdded = sortedSeats.stream().limit(numberOfFreeSeats).map((bookingSeat) -> {
+            return bookingSeat.getSeat().getPrice().divide(new BigDecimal(2));
+        }).collect(Collectors.summingDouble(mapper -> mapper.doubleValue()));
         if (numberOfFreeSeats > 0) {
             booking.setTotalAmount(booking.getTotalAmount()
-                    .subtract(booking.getTotalAmount()
-                            .divide(new BigDecimal(booking.getBookingSeats().size()))
-                            .multiply(new BigDecimal(numberOfFreeSeats)).divide(new BigDecimal(2))));
+                    .subtract(amountToBeSubtracted).add(new BigDecimal(amountToBeAdded)));
             this.discountApplied = true;
             booking.getDiscountsApplied().add(this.clone());
         }
