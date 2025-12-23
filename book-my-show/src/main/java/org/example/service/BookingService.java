@@ -35,7 +35,7 @@ public class BookingService {
         this.visitors = visitors;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     public Booking book(BookingRequest bookingDTO) throws CloneNotSupportedException, ExecutionException, InterruptedException {
         Booking booking = converter.convertToBookingEntity(bookingDTO);
         booking.setTotalAmount(booking.getBookingSeats().parallelStream()
