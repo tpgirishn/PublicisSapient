@@ -46,9 +46,9 @@ public class BookingService {
         Set<Long> seatsLockedOrAlreadyBooked = booking.getBookingSeats()
                 .parallelStream()
                 .map(mapper -> mapper.getSeat().getId()).collect(Collectors.toSet());
-        Set<String> seatsForCurrentBooking = seatRepository.customFindAllById(seatsLockedOrAlreadyBooked)
+        List<String> seatsForCurrentBooking = seatRepository.customFindAllById(seatsLockedOrAlreadyBooked)
                 .parallelStream()
-                .map(mapper -> mapper.getStatus()).collect(Collectors.toSet());
+                .map(mapper -> mapper.getStatus()).collect(Collectors.toList());
 
         if (seatsForCurrentBooking.size() == 0) {
             throw new RuntimeException("The current combination of seats are not available. " +

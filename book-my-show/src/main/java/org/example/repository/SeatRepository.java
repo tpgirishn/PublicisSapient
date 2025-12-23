@@ -2,6 +2,7 @@ package org.example.repository;
 
 import org.example.entity.Seat;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -22,7 +23,7 @@ public interface SeatRepository extends JpaRepository<Seat, Long> {
                 parallelStream().map(mapper -> this.customFindById(mapper)).collect(Collectors.toList());
     }
 
-    @Cacheable(value = "seats", key = "#id")
+    @Cacheable(value = "seats", key = "#id", condition = "#seat.id == 'AVAILABLE'")
     default <S extends Seat> Seat customFindById(Long id){
         return this.findById(id).get();
     }
