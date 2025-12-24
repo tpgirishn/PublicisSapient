@@ -26,12 +26,12 @@ public class AdminController {
     }
 
     @PostMapping("/theater")
-    public ResponseEntity<Theater> getSingleThater(@RequestBody Theater th) {
-        th.getScreens().forEach(eachScreen -> {
+    public ResponseEntity<Theater> saveSingleTheater(@RequestBody Theater theater) {
+        theater.getScreens().forEach(eachScreen -> {
             eachScreen.getSeats().forEach(eachSeat -> eachSeat.setScreen(eachScreen));
-            eachScreen.setTheater(th);
+            eachScreen.setTheater(theater);
         });
-        Theater savedTheater = theaterRepository.saveAndFlush(th);
+        Theater savedTheater = theaterRepository.saveAndFlush(theater);
         savedTheater.getScreens().forEach(eachScreen -> {
             eachScreen.getSeats().forEach(cacheService::performSingleCachePut);
         });

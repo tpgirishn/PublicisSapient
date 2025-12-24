@@ -1,12 +1,11 @@
 spring:
   datasource:
-    url: jdbc:h2:file:~/moviebookingdb
+    url: jdbc:h2:mem:moviebookingdb
     driver-class-name: org.h2.Driver
     username: sa
     password:
 
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: none   # IMPORTANT: let Flyway manage schema
     show-sql: true
@@ -17,7 +16,7 @@ spring:
       path: /h2-console
 
   flyway:
-    url: jdbc:h2:file:~/moviebookingdb
+    url: jdbc:h2:mem:moviebookingdb
     driver-class-name: org.h2.Driver
     username: sa
     password:
@@ -35,3 +34,8 @@ management:
           - health
           - caches
           - metrics
+          - h2-console
+logging:
+  level:
+    org:
+      flywaydb: DEBUG

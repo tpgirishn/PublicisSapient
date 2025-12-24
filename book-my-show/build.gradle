@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.flywaydb.flyway' version '11.19.0'
+    id 'org.flywaydb.flyway' version '11.14.1'
     id 'org.springframework.boot' version '4.0.0'
     id 'io.spring.dependency-management' version '1.1.7'
 }
@@ -17,15 +17,17 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation('org.springframework.boot:spring-boot-starter-cache')
-    implementation('com.h2database:h2')
+    implementation('org.flywaydb:flyway-core')
+    runtimeOnly('com.h2database:h2')
     implementation('org.springframework.boot:org.springframework.boot.gradle.plugin:4.0.0')
+    implementation ('org.springframework.boot:spring-boot-starter-flyway')
     compileOnly('org.projectlombok:lombok')
     annotationProcessor('org.projectlombok:lombok')
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 flyway {
-    url = 'jdbc:h2:file:~/moviebookingdb' // H2 file-based URL; use 'jdbc:h2:mem:mydb' for in-memory
+    url = 'jdbc:h2:mem:moviebookingdb' // H2 file-based URL; use 'jdbc:h2:mem:mydb' for in-memory
     user = 'sa'
     password = '' // H2 default user 'sa' has no password by default
     schemas = ['PUBLIC'] // Default schema for H2

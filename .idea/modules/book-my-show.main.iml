@@ -17,7 +17,8 @@
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-data-jpa:4.0.0" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-actuator:4.0.0" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-cache:4.0.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.h2database:h2:2.4.240" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-flyway:4.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.flywaydb:flyway-core:11.14.1" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-jackson:4.0.0" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-tomcat:4.0.0" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-http-converter:4.0.0" level="project" />
@@ -32,6 +33,8 @@
     <orderEntry type="library" name="Gradle: io.micrometer:micrometer-jakarta9:1.16.0" level="project" />
     <orderEntry type="library" name="Gradle: io.micrometer:micrometer-observation:1.16.0" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-cache:4.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-flyway:4.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.20.1" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-gradle-plugin:4.0.0" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-jackson:4.0.0" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-tomcat-runtime:4.0.0" level="project" />
@@ -58,6 +61,8 @@
     <orderEntry type="library" name="Gradle: io.micrometer:micrometer-commons:1.16.0" level="project" />
     <orderEntry type="library" name="Gradle: org.jspecify:jspecify:1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-context-support:7.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.20.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.20" level="project" />
     <orderEntry type="library" name="Gradle: tools.jackson.core:jackson-databind:3.0.2" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-web-server:4.0.0" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.tomcat.embed:tomcat-embed-websocket:11.0.14" level="project" />
@@ -82,7 +87,6 @@
     <orderEntry type="library" name="Gradle: org.aspectj:aspectjweaver:1.9.25" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-micrometer-observation:4.0.0" level="project" />
     <orderEntry type="library" name="Gradle: tools.jackson.core:jackson-core:3.0.2" level="project" />
-    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.20" level="project" />
     <orderEntry type="library" name="Gradle: commons-logging:commons-logging:1.3.5" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.25.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: biz.aQute.bnd:biz.aQute.bnd.annotation:7.1.0" level="project" />
@@ -96,6 +100,8 @@
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.osgi:org.osgi.resource:1.0.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.osgi:org.osgi.service.serviceloader:1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-h2:" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.h2database:h2:2.4.240" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.springframework.boot:spring-boot-buildpack-platform:4.0.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.springframework.boot:spring-boot-loader-tools:4.0.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: io.spring.gradle:dependency-management-plugin:1.1.7" level="project" />
